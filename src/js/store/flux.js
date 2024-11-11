@@ -1,55 +1,55 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
+    return {
+        store: {
+            contacts: [],
+            demo: [
+                { title: "FIRST", background: "white", initial: "white" },
+                { title: "SECOND", background: "white", initial: "white" }
+            ]
+        },
+        actions: {
+
+            getContacts: async () => {
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}agendas/alison`);
+					if (resp.ok) {
+						const data = await resp.json();
+						console.log("Data fetched from getContacts:", data); // Verifica la data recibida
+						setStore({ contacts: data.contacts }); // Usa `data.contacts` en lugar de `data`
+					} else {
+						console.error("Error al obtener contactos", resp.status);
+					}
+				} catch (error) {
+					console.error("Error en getContacts:", error);
 				}
-			],
-			contacts: [],
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+			
+            createContact: async (newContact) => {
+    try {
+        const response = await fetch("https://playground.4geeks.com/contact/agendas/alison/contacts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newContact)
+        });
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+        if (!response.ok) throw new Error("Error al crear el contacto");
 
-				//reset the global store
-				setStore({ demo: demo });
-			},
+        const data = await response.json();
 
-			//funcion para importar contacto
-			getContacts: async () => {
-				const resp = await fetch(process.env.BACKEND_URL+ "agendas/alison");
-				const data = await resp.json()
-				console.log(data);
-				setStore({contacts: data.contacts})
-			}
-		}
-	}
+        // Añadir el nuevo contacto a la lista si fue creado correctamente
+        setStore({ contacts: [...getStore().contacts, data] });
+
+        console.log("Contacto creado:", data);  // Para depuración
+    } catch (error) {
+        console.error("Error al crear el contacto:", error);
+    }
+},
+
+            // ... otras acciones
+        }
+    };
 };
-
 
 export default getState;

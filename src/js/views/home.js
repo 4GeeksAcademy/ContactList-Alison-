@@ -1,24 +1,28 @@
-import React from "react";
-import "../../styles/home.css";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { ContactCard } from "../component/card";
+import { ContactCard } from "../component/contactCard";
 
 
 
 export const Home = () => {
+    const { actions, store } = useContext(Context);
 
-	const {actions, store} = useContext(Context);
+    useEffect(() => {
+        actions.getContacts();
+    }, []);
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!</h1>
-			{
-				store.contacts.map((item, index) =>{
-					return <ContactCard key = {index} name ={item.name} /> 
-				})
-			}
+    return (
+        <div className="container mt-5">
+            <h1>Lista de Contactos</h1>
+            {store.contacts.length > 0 ? (
+                store.contacts.map((item, index) => (
+                    <ContactCard key={index} {...item} />
+                ))
+            ) : (
+                <p>No hay contactos disponibles</p>
+            )}
 
-		</div>
-	);
-}
+			
+        </div>
+    );
+};
