@@ -15,9 +15,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         const data = await resp.json();
                         console.log("Data fetched from getContacts:", data); // Verifica la data recibida
                         
-                        // Asegurarse de que no se dupliquen los contactos
-                        const existingContacts = getStore().contacts;
-                        const newContacts = data.contacts;
 
                         // Compara los contactos para evitar duplicados
                         const mergedContacts = [

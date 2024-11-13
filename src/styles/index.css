@@ -1,3 +1,44 @@
 /* 
     General Styles
 */
+.contact-card {
+    max-width: 600px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex; /* Asegura que el contenido se alinee horizontalmente */
+    align-items: center;
+}
+
+.contact-card img {
+    width: 120px; /* Tamaño aumentado */
+    height: 120px; /* Tamaño aumentado */
+    border-radius: 50%; /* Asegura que la imagen sea circular */
+    margin-right: 15px; /* Espacio entre la imagen y el texto */
+}
+
+.contact-card .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+}
+
+.contact-card .card-text {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.contact-card .edit-icon,
+.contact-card .delete-icon {
+    font-size: 1.2rem;
+    margin: 5px;
+    cursor: pointer;
+    color: #888;
+}
+
+.contact-card .edit-icon:hover {
+    color: #007bff;
+}
+
+.contact-card .delete-icon:hover {
+    color: #dc3545;
+}
