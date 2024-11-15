@@ -1,3 +1,4 @@
+//imports
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "bootstrap/dist/css/bootstrap.min.css";
